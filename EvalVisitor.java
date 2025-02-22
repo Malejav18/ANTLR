@@ -30,7 +30,7 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Float> {
         return (float)0;                          // return dummy value
     }
 
-    /** INT */
+    /** FLOAT */
     @Override
     public Float visitFloat(LabeledExprParser.FloatContext ctx) {
         return Float.valueOf(ctx.FLOAT().getText());
@@ -41,6 +41,8 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Float> {
     public Float visitId(LabeledExprParser.IdContext ctx) {
         String id = ctx.ID().getText();
         if ( memory.containsKey(id) ) return memory.get(id);
+        System.out.println("se detecto una variable desconocida");
+        System.exit(1); 
         return (float)0;
     }
 
@@ -50,7 +52,12 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Float> {
         float left = visit(ctx.expr(0));  // get value of left subexpression
         float right = visit(ctx.expr(1)); // get value of right subexpression
         if ( ctx.op.getType() == LabeledExprParser.MUL ) return left * right;
-        if (right!=0) return left / right; else {System.out.println("imposible"); return (float)0;} // must be DIV 
+        if (right!=0) return left / right; // must be DIV
+        else {
+            System.out.println("se detecto una division por 0");
+            System.exit(1);
+            return (float)0; 
+            }  
     }
 
     /** expr op=('+'|'-') expr */
@@ -66,5 +73,12 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Float> {
     @Override
     public Float visitParens(LabeledExprParser.ParensContext ctx) {
         return visit(ctx.expr()); // return child expr's value
+    }
+    
+    /** '-' expr */
+    @Override
+    public Float visitNeg(LabeledExprParser.NegContext ctx) {
+        float value=visit(ctx.expr());
+        return -(value); // return negative of expr's value
     }
 }
