@@ -36,6 +36,23 @@ brew install gnuplot
 
 # ⚡Como usarlo
 
+### Crear el parser
+```
+antlr4 -no-listener -visitor LabeledExpr.g4
+```
+### Compilar el programa
+```
+javac Calc.java LabeledExpr*.java
+```
+### Ejectutar el progrma con t.expr
+```
+java Calc t.expr
+```
+Opcionalmente se puede ver las expresiones de t.expr usando
+```
+cat t.expr
+```
 
-## Ejemplo:
+# ⚙Pruebas funcionales
+
 
