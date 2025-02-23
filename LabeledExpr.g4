@@ -20,6 +20,6 @@ DIV :   '/' ;
 ADD :   '+' ;
 SUB :   '-' ;
 ID  :   [a-zA-Z]+ ;      // match identifiers
-FLOAT : [0-9]+ ('.' [0-9]*)? ;
+FLOAT : [0-9]+ ('.' [0-9]*)?|('.' [0-9]+) ;
 NEWLINE:'\r'? '\n' ;     // return newlines to parser (is end-statement signal)
 WS  :   [ \t]+ -> skip ; // toss out whitespace
