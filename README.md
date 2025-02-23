@@ -70,6 +70,7 @@ y/y+10
 12.-1-4/4      
 -3*8      
 "
+4/0
 ```
 
 Salida
@@ -91,8 +92,9 @@ line 13:0 token recognition error at: '"'
 0.5
 10.0
 -24.0
+se detecto una division por 0
 ```
-El parser con el que se trabaja permite ignorar errores como simbolos fuera del lenguaje o tener dos simbolos de operacion seguidos, donde muestra un aviso y solo toma en cuenta el primer simbolo, con excepción  de la resta ya que esto se interpreta como un numero negativo, de tener un un punto sin que le siga un numero se ignorara.
+El parser con el que se trabaja permite ignorar errores, como simbolos fuera del lenguaje, y mostrar un aviso. Cuando hay dos simbolos de operacion (+,-,*,/) seguidos solo tendra en cuenta el primero, con excepción  de la resta ya que esto se interpretara como parte de un numero negativo. En caso de haber un un punto sin que le siga un numero se ignorara.
 ### Casos especiales
 Para los siguientes casos el programa mostrara un mensaje de error y se terminara prematuramente:
 - Division por cero
