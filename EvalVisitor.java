@@ -49,20 +49,30 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Float> {
     /** expr op=('*'|'/') expr */
     @Override
     public Float visitMulDiv(LabeledExprParser.MulDivContext ctx) {
+        if((null==visit(ctx.expr(0))) || (null==visit(ctx.expr(1)))){
+            System.out.println("Error sintactico");
+            System.exit(1);
+            return (float)0;
+        }
         float left = visit(ctx.expr(0));  // get value of left subexpression
         float right = visit(ctx.expr(1)); // get value of right subexpression
         if ( ctx.op.getType() == LabeledExprParser.MUL ) return left * right;
-        if (right!=0) return left / right; // must be DIV
+        if (right!=0) return left / right; 
         else {
             System.out.println("se detecto una division por 0");
             System.exit(1);
-            return (float)0; 
-            }  
+            return (float)0;
+        } // must be DIV 
     }
 
     /** expr op=('+'|'-') expr */
     @Override
     public Float visitAddSub(LabeledExprParser.AddSubContext ctx) {
+        if((null==visit(ctx.expr(0))) || (null==visit(ctx.expr(1)))){
+            System.out.println("Error sintactico");
+            System.exit(1);
+            return (float)0;
+        }
         float left = visit(ctx.expr(0));  // get value of left subexpression
         float right = visit(ctx.expr(1)); // get value of right subexpression
         if ( ctx.op.getType() == LabeledExprParser.ADD ) return left + right;
@@ -78,7 +88,12 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Float> {
     /** '-' expr */
     @Override
     public Float visitNeg(LabeledExprParser.NegContext ctx) {
+        if(null==visit(ctx.expr())){
+            System.out.println("signo menos sin argumento");
+            System.exit(1);
+            return (float)0;
+        }
         float value=visit(ctx.expr());
-        return -(value); // return negative of expr's value
+        return -(value); // return negative of child expr's value
     }
 }
