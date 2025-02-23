@@ -55,4 +55,46 @@ cat t.expr
 
 # ⚙Pruebas funcionales
 
+Entrada  
+```    
+x = -5.32      
+y = 3+*9      
+3.1 *(-x+2)      
+.4+3      
+52.3//2.1      
+7**1      
+6++3      
+3--2      
+y/y+10      
+(3*+1)/*6      
+12.-1-4/4      
+-3*8      
+"
+```
 
+Salida
+```
+line 2:6 extraneous input '*' expecting {'(', '-', ID, FLOAT}
+line 5:5 extraneous input '/' expecting {'(', '-', ID, FLOAT}
+line 6:2 extraneous input '*' expecting {'(', '-', ID, FLOAT}
+line 7:2 extraneous input '+' expecting {'(', '-', ID, FLOAT}
+line 10:3 extraneous input '+' expecting {'(', '-', ID, FLOAT}
+line 10:7 extraneous input '*' expecting {'(', '-', ID, FLOAT}
+line 13:0 token recognition error at: '"'
+22.692
+3.4
+24.904762
+7.0
+9.0
+5.0
+11.0
+0.5
+10.0
+-24.0
+```
+El parser con el que se trabaja permite ignorar errores como simbolos fuera del lenguaje o tener dos simbolos de operacion seguidos, donde muestra un aviso y solo toma en cuenta el primer simbolo, con excepción  de la resta ya que esto se interpreta como un numero negativo, de tener un un punto sin que le siga un numero se ignorara.
+### Casos especiales
+Para los siguientes casos el programa mostrara un mensaje de error y se terminara prematuramente:
+- Division por cero
+- Variables sin asignar
+- Mas de dos simbolos de operacion seguidos (exceptuando el simbolo "-")
