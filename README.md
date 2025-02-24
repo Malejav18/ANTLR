@@ -111,7 +111,7 @@ Opcionalmente se puede ver las expresiones de t.expr usando
 cat t.expr
 ```
 
-# ⚙Pruebas funcionales
+# ⚙ Pruebas funcionales
 
 ## Funcionamiento normal - t.expr
 
