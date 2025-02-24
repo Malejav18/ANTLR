@@ -11,7 +11,7 @@
 
 ## 📝 Descripción
 
-Este proyecto implementa una calculadora aritmética utilizando **ANTLR (Another Tool for Language Recognition)** para el análisis léxico y sintáctico. La calculadora es capaz de evaluar expresiones matemáticas, asignar y utilizar variables, y manejar errores comunes de sintaxis y ejecución de manera controlada.
+Este proyecto implementa una calculadora aritmética utilizando **ANTLR (Another Tool for Language Recognition)** para el análisis léxico y sintáctico. La calculadora es capaz de evaluar expresiones matemáticas (suma, resta, multiplicacion y division), asignar y utilizar variables, y manejar errores comunes de sintaxis y ejecución de manera controlada.
 
 
 ## 🧷 Requerimientos
