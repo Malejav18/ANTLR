@@ -1,24 +1,60 @@
-# ANTLR
+# 📚 ANTLR - Calculadora con Manejo de Errores
 
-Integrantes:
+## Integrantes
 
-- Eduardo Hincapie 
-- Josh Lopez 
-- Miguel Suarez 
+- Eduardo Hincapie
+- Josh Lopez
+- Miguel Suarez
 - Alejandra Vargas
 
+---
 
-# 🧷 Requerimientos necesarios
+## 📝 Descripción
 
-Para correr el programa creado se necesita tener instalado **ANTLR**, el cual esta disponible en sistemas Linux / macOs.
+Este proyecto implementa una calculadora aritmética utilizando **ANTLR (Another Tool for Language Recognition)** para el análisis léxico y sintáctico. La calculadora es capaz de evaluar expresiones matemáticas, asignar y utilizar variables, y manejar errores comunes de sintaxis y ejecución de manera controlada.
 
-### Proceso de instalación de ANTLR: 
 
-### Linux
+## 🧷 Requerimientos
+
+### Dependencias necesarias
+
+- **Java JDK** (versión 8 o superior)
+- **ANTLR** (instalable en Linux y macOS)
+
+### Instalación de Java
+
+#### Linux
+
+```sh
+sudo apt update
+sudo apt install default-jdk
 ```
-sudo apt install 
+
+#### macOS
+
+```sh
+brew install openjdk
 ```
 
+### Instalación de ANTLR
+
+#### Linux
+
+##### Opción 1:
+
+```sh
+sudo apt-get install antlr4
+```
+
+##### Opción 2:
+
+```sh
+cd /usr/local/lib
+sudo curl -O http://www.antlr.org/download/antlr-4.5-complete.jar
+export CLASSPATH=”.:/usr/local/lib/antlr-4.5-complete.jar:$CLASSPATH” 
+alias antlr4=’java -Xmx500M -cp “/usr/local/lib/antlr-4.5-complete.jar:$CLASSPATH” org.antlr.v4.Tool’
+alias grun=’java org.antlr.v4.gui.TestRig’
+```
 
 
 ### macOs
@@ -27,9 +63,8 @@ Instalar homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-Instalar ANTLR
-```
-brew install gnuplot
+```sh
+brew install antlr
 ```
 
 
@@ -44,7 +79,7 @@ antlr4 -no-listener -visitor LabeledExpr.g4
 ```
 javac Calc.java LabeledExpr*.java
 ```
-### Ejectutar el progrma con t.expr
+### Ejecutar el progrma con t.expr
 ```
 java Calc t.expr
 ```
@@ -55,7 +90,7 @@ cat t.expr
 
 # ⚙Pruebas funcionales
 
-Entrada  
+## Ejemplo de Entrada  
 ```    
 x = -5.32      
 y = 3+*9      
@@ -73,7 +108,7 @@ y/y+10
 4/0
 ```
 
-Salida
+## Ejemplo de Salida
 ```
 line 2:6 extraneous input '*' expecting {'(', '-', ID, FLOAT}
 line 5:5 extraneous input '/' expecting {'(', '-', ID, FLOAT}
@@ -95,8 +130,18 @@ line 13:0 token recognition error at: '"'
 se detecto una division por 0
 ```
 El parser con el que se trabaja permite ignorar errores, como simbolos fuera del lenguaje, y mostrar un aviso. Cuando hay dos simbolos de operacion (+,-,*,/) seguidos solo tendra en cuenta el primero, con excepción  de la resta ya que esto se interpretara como parte de un numero negativo. En caso de haber un un punto sin que le siga un numero se ignorara.
-### Casos especiales
-Para los siguientes casos el programa mostrara un mensaje de error y se terminara prematuramente:
-- Division por cero
-- Variables sin asignar
-- Mas de dos simbolos de operacion seguidos (exceptuando el simbolo "-")
+
+## 🚨 Casos Especiales
+
+En las siguientes situaciones, el programa mostrará un mensaje de error y se detendrá de manera controlada:
+
+- División por cero.
+- Uso de variables no asignadas.
+- Más de dos símbolos de operación consecutivos (excepto el signo "-").
+
+---
+
+
+
+
+
