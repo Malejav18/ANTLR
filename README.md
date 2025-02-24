@@ -90,53 +90,65 @@ cat t.expr
 
 # ⚙Pruebas funcionales
 
-## Ejemplo de Entrada  
+## Funcionamiento normal - t.expr
+
+### Ejemplo de Entrada  
 ```    
-x = -5.32      
-y = 3+*9      
-3.1 *(-x+2)      
-.4+3      
-52.3//2.1      
-7**1      
-6++3      
-3--2      
-y/y+10      
-(3*+1)/*6      
-12.-1-4/4      
--3*8      
-"
-4/0
+x = -5.32
+3.1 *(-x+2)
+.4+3
+52.3/2.1
+7*0
+3--2
+12.-1-4/4
+-3*8
 ```
 
-## Ejemplo de Salida
+### Ejemplo de Salida
 ```
-line 2:6 extraneous input '*' expecting {'(', '-', ID, FLOAT}
-line 5:5 extraneous input '/' expecting {'(', '-', ID, FLOAT}
-line 6:2 extraneous input '*' expecting {'(', '-', ID, FLOAT}
-line 7:2 extraneous input '+' expecting {'(', '-', ID, FLOAT}
-line 10:3 extraneous input '+' expecting {'(', '-', ID, FLOAT}
-line 10:7 extraneous input '*' expecting {'(', '-', ID, FLOAT}
-line 13:0 token recognition error at: '"'
-22.692
-3.4
-24.904762
-7.0
-9.0
-5.0
-11.0
-0.5
-10.0
--24.0
-se detecto una division por 0
+
 ```
+
+## Manejo de errores - errores1.expr
+
+### Ejemplo de Entrada  
+```    
+y = 3+*9
+52.3//2.1
+7**1
+6++3
+```
+
+### Ejemplo de Salida
+```
+
+```
+
+## Manejo de errores - errores1.expr
+
+### Ejemplo de Entrada  
+```    
+y = 3+*9
+y/y+10
+(3*+1)/*6
+4/0
+(
+```
+
+### Ejemplo de Salida
+```
+
+```
+
 El parser con el que se trabaja permite ignorar errores, como simbolos fuera del lenguaje, y mostrar un aviso. Cuando hay dos simbolos de operacion (+,-,*,/) seguidos solo tendra en cuenta el primero, con excepción  de la resta ya que esto se interpretara como parte de un numero negativo. En caso de haber un un punto sin que le siga un numero se ignorara.
 
 ## 🚨 Casos Especiales
 
-En las siguientes situaciones, el programa mostrará un mensaje de error y se detendrá de manera controlada:
+En las siguientes situaciones, el programa mostrará un mensaje de error correspondiente:
 
 - División por cero.
 - Uso de variables no asignadas.
+- Errores sintácticos
 - Más de dos símbolos de operación consecutivos (excepto el signo "-").
 
 ---
