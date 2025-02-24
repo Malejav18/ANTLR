@@ -102,7 +102,7 @@ antlr4 -no-listener -visitor LabeledExpr.g4
 ```
 javac Calc.java LabeledExpr*.java
 ```
-### Ejecutar el progrma con t.expr
+### Ejecutar el programa con t.expr
 ```
 java Calc t.expr
 ```
