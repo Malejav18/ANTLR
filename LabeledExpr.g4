@@ -10,6 +10,7 @@ stat:   expr NEWLINE                # printExpr
 expr:   '-' expr                    # neg
     |   expr op=('*'|'/') expr      # MulDiv
     |   expr op=('+'|'-') expr      # AddSub
+    |   expr POW expr               # Power
     |   FLOAT                       # float
     |   ID                          # id
     |   '(' expr ')'                # parens
@@ -19,6 +20,7 @@ MUL :   '*' ; // assigns token name to '*' used above in grammar
 DIV :   '/' ;
 ADD :   '+' ;
 SUB :   '-' ;
+POW :   '**' ;
 ID  :   [a-zA-Z]+ ;      // match identifiers
 FLOAT : [0-9]+ ('.' [0-9]*)?|('.' [0-9]+) ;
 NEWLINE:'\r'? '\n' ;     // return newlines to parser (is end-statement signal)
