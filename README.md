@@ -106,7 +106,13 @@ x = -5.32
 
 ### Ejemplo de Salida
 ```
-
+22.692
+3.4
+24.904762
+0.0
+5.0
+10.0
+-24.0
 ```
 
 ## Manejo de errores - errores1.expr
@@ -121,7 +127,22 @@ y = 3+*9
 
 ### Ejemplo de Salida
 ```
-
+line 1:6 no viable alternative at input '*'
+line 2:5 no viable alternative at input '/'
+line 3:2 no viable alternative at input '*'
+line 4:2 no viable alternative at input '+'
+Error en la operación suma/resta: Expresión de suma o resta inválida
+Error en la operación multiplicación/división: Expresión de multiplicación o división inválida
+Error en la asignación: Asignación inválida para la variable: y
+Error en la operación multiplicación/división: Expresión de multiplicación o división inválida
+Error en la operación multiplicación/división: Expresión de multiplicación o división inválida
+Error al imprimir: Expresión inválida en la impresión
+Error en la operación multiplicación/división: Expresión de multiplicación o división inválida
+Error en la operación multiplicación/división: Expresión de multiplicación o división inválida
+Error al imprimir: Expresión inválida en la impresión
+Error en la operación suma/resta: Expresión de suma o resta inválida
+Error en la operación suma/resta: Expresión de suma o resta inválida
+Error al imprimir: Expresión inválida en la impresión
 ```
 
 ## Manejo de errores - errores1.expr
@@ -137,7 +158,28 @@ y/y+10
 
 ### Ejemplo de Salida
 ```
-
+line 1:6 no viable alternative at input '*'
+line 3:3 no viable alternative at input '+'
+line 3:7 no viable alternative at input '*'
+line 5:1 no viable alternative at input '\n'
+Error en la operación suma/resta: Expresión de suma o resta inválida
+Error en la operación multiplicación/división: Expresión de multiplicación o división inválida
+Error en la asignación: Asignación inválida para la variable: y
+Variable desconocida: y
+Variable desconocida: y
+Error en la operación multiplicación/división: Expresión de multiplicación o división inválida
+Error en la operación suma/resta: Expresión de suma o resta inválida
+Error al imprimir: Expresión inválida en la impresión
+Error en la operación multiplicación/división: Expresión de multiplicación o división inválida
+Error en la operación suma/resta: Expresión de suma o resta inválida
+Error en la expresión con paréntesis: Paréntesis mal balanceados o expresión inválida
+Error en la operación multiplicación/división: Expresión de multiplicación o división inválida
+Error en la operación multiplicación/división: Expresión de multiplicación o división inválida
+Error al imprimir: Expresión inválida en la impresión
+Error en la operación multiplicación/división: División por 0
+Error al imprimir: Expresión inválida en la impresión
+Error en la expresión con paréntesis: Paréntesis mal balanceados o expresión inválida
+Error al imprimir: Expresión inválida en la impresión
 ```
 
 El parser con el que se trabaja permite ignorar errores, como simbolos fuera del lenguaje, y mostrar un aviso. Cuando hay dos simbolos de operacion (+,-,*,/) seguidos solo tendra en cuenta el primero, con excepción  de la resta ya que esto se interpretara como parte de un numero negativo. En caso de haber un un punto sin que le siga un numero se ignorara.
