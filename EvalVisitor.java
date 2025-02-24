@@ -46,6 +46,14 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Float> {
         float exponent = visit(ctx.expr(1));  
         return (float) Math.pow(base, exponent);
     }
+    
+    @Override
+    public Float visitAbsolute(LabeledExprParser.AbsoluteContext ctx){
+        float value = visit(ctx.expr());
+        return Math.abs(value);
+    }
+    
+    
 
     /** ID */
     @Override
@@ -70,7 +78,7 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Float> {
         if ( ctx.op.getType() == LabeledExprParser.MUL ) return left * right;
         if (right!=0) return left / right; 
         else {
-            System.out.println("se detecto una division por 0");
+            System.out.println("Error: Division por 0");
             System.exit(1);
             return (float)0;
         } // must be DIV 
@@ -100,7 +108,7 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Float> {
     @Override
     public Float visitNeg(LabeledExprParser.NegContext ctx) {
         if(null==visit(ctx.expr())){
-            System.out.println("signo menos sin argumento");
+            System.out.println("Error: Signo - sin argumento");
             System.exit(1);
             return (float)0;
         }

@@ -7,15 +7,16 @@ stat:   expr NEWLINE                # printExpr
     |   NEWLINE                     # blank
     ;
 
-expr:   '-' expr                    # neg
+expr:   '(' expr ')'                # Parens
+    |   '|' expr '|'                # Absolute
+    |   '-' expr                    # Neg
+    |   expr POW expr               # Power
     |   expr op=('*'|'/') expr      # MulDiv
     |   expr op=('+'|'-') expr      # AddSub
-    |   expr POW expr               # Power
-    |   FLOAT                       # float
-    |   ID                          # id
-    |   '(' expr ')'                # parens
+    |   FLOAT                       # Float
+    |   ID                          # Id
     ;
-
+    
 MUL :   '*' ; // assigns token name to '*' used above in grammar
 DIV :   '/' ;
 ADD :   '+' ;
