@@ -5,95 +5,147 @@
  * courses, books, articles, and the like. Contact us if you are in doubt.
  * We make no guarantees that this code is fit for any purpose. 
  * Visit http://www.pragmaticprogrammer.com/titles/tpantlr2 for more book information.
+ * EvalVisitor.java
+ * Adaptado para un entorno de producción.
+ * Mejora del manejo de errores críticos con excepciones controladas.
 ***/
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class EvalVisitor extends LabeledExprBaseVisitor<Float> {
-    /** "memory" for our calculator; variable/value pairs go here */
-    Map<String, Float> memory = new HashMap<String, Float>();
+    /** Mapa de memoria para almacenar variables y sus valores */
+    Map<String, Float> memory = new HashMap<>();
 
-    /** ID '=' expr NEWLINE */
+    /** Asignación de variables: ID '=' expr NEWLINE */
     @Override
     public Float visitAssign(LabeledExprParser.AssignContext ctx) {
-        String id = ctx.ID().getText();  // id is left-hand side of '='
-        float value = visit(ctx.expr());   // compute value of expression on right
-        memory.put(id, value);           // store it in our memory
-        return value;
+        String id = ctx.ID().getText();
+        try {
+            Float value = visit(ctx.expr());
+            if (value == null) {
+                throw new IllegalArgumentException("Asignación inválida para la variable: " + id);
+            }
+            memory.put(id, value); // Almacena el valor en la memoria
+            return value;
+        } catch (Exception e) {
+            System.err.println("Error en la asignación: " + e.getMessage());
+            return null;
+        }
     }
 
-    /** expr NEWLINE */
+    /** Evaluación de expresiones y su impresión: expr NEWLINE */
     @Override
     public Float visitPrintExpr(LabeledExprParser.PrintExprContext ctx) {
-        Float value = visit(ctx.expr()); // evaluate the expr child
-        System.out.println(value);         // print the result
-        return (float)0;                          // return dummy value
+        try {
+            Float value = visit(ctx.expr());
+            if (value == null) {
+                throw new IllegalArgumentException("Expresión inválida en la impresión");
+            }
+            System.out.println(value); // Muestra el resultado en consola
+            return 0f;
+        } catch (Exception e) {
+            System.err.println("Error al imprimir: " + e.getMessage());
+            return null;
+        }
     }
 
-    /** FLOAT */
+    /** Manejo de números flotantes: FLOAT */
     @Override
     public Float visitFloat(LabeledExprParser.FloatContext ctx) {
-        return Float.valueOf(ctx.FLOAT().getText());
+        try {
+            return Float.valueOf(ctx.FLOAT().getText());
+        } catch (NumberFormatException e) {
+            System.err.println("Número flotante mal formado: " + e.getMessage());
+            return null;
+        }
     }
 
-    /** ID */
+    /** Evaluación de identificadores: ID */
     @Override
     public Float visitId(LabeledExprParser.IdContext ctx) {
         String id = ctx.ID().getText();
-        if ( memory.containsKey(id) ) return memory.get(id);
-        System.out.println("se detecto una variable desconocida");
-        System.exit(1); 
-        return (float)0;
+        if (memory.containsKey(id)) {
+            return memory.get(id); // Retorna el valor almacenado
+        }
+        System.err.println("Variable desconocida: " + id);
+        return null;
     }
 
-    /** expr op=('*'|'/') expr */
+    /** Operaciones de multiplicación y división: expr op=('*'|'/') expr */
     @Override
     public Float visitMulDiv(LabeledExprParser.MulDivContext ctx) {
-        if((null==visit(ctx.expr(0))) || (null==visit(ctx.expr(1)))){
-            System.out.println("Error sintactico");
-            System.exit(1);
-            return (float)0;
+        try {
+            Float left = visit(ctx.expr(0)); // Evaluación del operando izquierdo
+            Float right = visit(ctx.expr(1)); // Evaluación del operando derecho
+
+            if (left == null || right == null) {
+                throw new IllegalArgumentException("Expresión de multiplicación o división inválida");
+            }
+
+            if (ctx.op.getType() == LabeledExprParser.MUL) {
+                return left * right; // Multiplicación
+            }
+
+            if (right == 0) {
+                throw new ArithmeticException("División por 0");
+            }
+            return left / right; // División
+        } catch (Exception e) {
+            System.err.println("Error en la operación multiplicación/división: " + e.getMessage());
+            return null;
         }
-        float left = visit(ctx.expr(0));  // get value of left subexpression
-        float right = visit(ctx.expr(1)); // get value of right subexpression
-        if ( ctx.op.getType() == LabeledExprParser.MUL ) return left * right;
-        if (right!=0) return left / right; 
-        else {
-            System.out.println("se detecto una division por 0");
-            System.exit(1);
-            return (float)0;
-        } // must be DIV 
     }
 
-    /** expr op=('+'|'-') expr */
+    /** Operaciones de suma y resta: expr op=('+'|'-') expr */
     @Override
     public Float visitAddSub(LabeledExprParser.AddSubContext ctx) {
-        if((null==visit(ctx.expr(0))) || (null==visit(ctx.expr(1)))){
-            System.out.println("Error sintactico");
-            System.exit(1);
-            return (float)0;
+        try {
+            Float left = visit(ctx.expr(0)); // Evaluación del operando izquierdo
+            Float right = visit(ctx.expr(1)); // Evaluación del operando derecho
+
+            if (left == null || right == null) {
+                throw new IllegalArgumentException("Expresión de suma o resta inválida");
+            }
+
+            if (ctx.op.getType() == LabeledExprParser.ADD) {
+                return left + right; // Suma
+            }
+            return left - right; // Resta
+        } catch (Exception e) {
+            System.err.println("Error en la operación suma/resta: " + e.getMessage());
+            return null;
         }
-        float left = visit(ctx.expr(0));  // get value of left subexpression
-        float right = visit(ctx.expr(1)); // get value of right subexpression
-        if ( ctx.op.getType() == LabeledExprParser.ADD ) return left + right;
-        return left - right; // must be SUB
     }
 
-    /** '(' expr ')' */
+    /** Evaluación de expresiones entre paréntesis: '(' expr ')' */
     @Override
     public Float visitParens(LabeledExprParser.ParensContext ctx) {
-        return visit(ctx.expr()); // return child expr's value
+        try {
+            Float value = visit(ctx.expr()); // Evaluación de la expresión interna
+            if (value == null) {
+                throw new IllegalArgumentException("Paréntesis mal balanceados o expresión inválida");
+            }
+            return value; // Devuelve el resultado de la expresión interna
+        } catch (Exception e) {
+            System.err.println("Error en la expresión con paréntesis: " + e.getMessage());
+            return null;
+        }
     }
-    
-    /** '-' expr */
+
+    /** Manejo de números negativos: '-' expr */
     @Override
     public Float visitNeg(LabeledExprParser.NegContext ctx) {
-        if(null==visit(ctx.expr())){
-            System.out.println("signo menos sin argumento");
-            System.exit(1);
-            return (float)0;
+        try {
+            Float value = visit(ctx.expr()); // Evaluación de la expresión
+            if (value == null) {
+                throw new IllegalArgumentException("Signo menos sin argumento válido");
+            }
+            return -value; // Retorna el valor negativo
+        } catch (Exception e) {
+            System.err.println("Error en la expresión negativa: " + e.getMessage());
+            return null;
         }
-        float value=visit(ctx.expr());
-        return -(value); // return negative of child expr's value
     }
 }
+
