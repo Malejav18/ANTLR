@@ -67,6 +67,29 @@ Instalar homebrew
 brew install antlr
 ```
 
+##### Opción 2:
+
+```sh
+curl -O https://www.antlr.org/download/antlr-4.13.1-complete.jar
+```
+
+Mover el directorio:
+```
+mv antlr-4.13.1-complete.jar /usr/local/lib/
+```
+
+Agregarlo a `PATH` y `CLASSPATH`.
+```
+nano ~/.zshrc
+export CLASSPATH=".:/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH"
+alias antlr4='java -jar /usr/local/lib/antlr-4.13.1-complete.jar'
+alias grun='java org.antlr.v4.gui.TestRig'
+```
+
+Recarga el perfil:
+```
+source ~/.zshrc
+```
 
 
 # ⚡Como usarlo
