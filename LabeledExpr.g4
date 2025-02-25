@@ -13,6 +13,7 @@ expr:   '(' expr ')'                # Parens
     |   expr POW expr               # Power
     |   expr op=('*'|'/') expr      # MulDiv
     |   expr op=('+'|'-') expr      # AddSub
+    |	expr op=('+'|'-'|'**'|'*'|'/') op=('+'|'-'|'**'|'*'|'/') expr      #Error
     |   FLOAT                       # Float
     |   ID                          # Id
     ;
