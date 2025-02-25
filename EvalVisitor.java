@@ -17,6 +17,10 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Float> {
     @Override
     public Float visitAssign(LabeledExprParser.AssignContext ctx) {
         String id = ctx.ID().getText();  // id is left-hand side of '='
+        if(visit(ctx.expr())==null){
+            //System.exit(1);
+            return null;
+        }
         float value = visit(ctx.expr());   // compute value of expression on right
         memory.put(id, value);           // store it in our memory
         return value;
@@ -58,20 +62,21 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Float> {
     /** ID */
     @Override
     public Float visitId(LabeledExprParser.IdContext ctx) {
-        String id = ctx.ID().getText();
+        String id = ctx.ID().getText(); 
         if ( memory.containsKey(id) ) return memory.get(id);
-        System.out.println("se detecto una variable desconocida");
-        System.exit(1); 
-        return (float)0;
+        /* 
+        
+        */
+        return null;
     }
 
     /** expr op=('*'|'/') expr */
     @Override
     public Float visitMulDiv(LabeledExprParser.MulDivContext ctx) {
         if((null==visit(ctx.expr(0))) || (null==visit(ctx.expr(1)))){
-            System.out.println("Error sintactico");
-            System.exit(1);
-            return (float)0;
+            System.out.println("Error: Argumento vacio mudi");
+            //System.exit(1);
+            return null;
         }
         float left = visit(ctx.expr(0));  // get value of left subexpression
         float right = visit(ctx.expr(1)); // get value of right subexpression
@@ -79,8 +84,8 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Float> {
         if (right!=0) return left / right; 
         else {
             System.out.println("Error: Division por 0");
-            System.exit(1);
-            return (float)0;
+            //System.exit(1);
+            return null;
         } // must be DIV 
     }
 
@@ -88,9 +93,9 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Float> {
     @Override
     public Float visitAddSub(LabeledExprParser.AddSubContext ctx) {
         if((null==visit(ctx.expr(0))) || (null==visit(ctx.expr(1)))){
-            System.out.println("Error sintactico");
-            System.exit(1);
-            return (float)0;
+            System.out.println("Error: Argumento vacio");
+            //System.exit(1);
+            return null;
         }
         float left = visit(ctx.expr(0));  // get value of left subexpression
         float right = visit(ctx.expr(1)); // get value of right subexpression
@@ -109,10 +114,16 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Float> {
     public Float visitNeg(LabeledExprParser.NegContext ctx) {
         if(null==visit(ctx.expr())){
             System.out.println("Error: Signo - sin argumento");
-            System.exit(1);
-            return (float)0;
+            //System.exit(1);
+            return null;
         }
         float value=visit(ctx.expr());
         return -(value); // return negative of child expr's value
+    }
+
+    @Override
+    public Float visitError(LabeledExprParser.ErrorContext ctx){
+        System.out.println("Error: Operadores seguidos");
+        return null;
     }
 }
