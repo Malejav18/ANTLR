@@ -53,6 +53,10 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Float> {
     
     @Override
     public Float visitAbsolute(LabeledExprParser.AbsoluteContext ctx){
+        if (ctx.getStart().getText().equals("|") && ctx.getStop().getText() != "|") {
+            System.out.println("Error: Falta el '|' de cierre.");
+            return null;
+        }
         float value = visit(ctx.expr());
         return Math.abs(value);
     }
