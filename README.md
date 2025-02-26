@@ -52,7 +52,7 @@ sudo apt-get install antlr4
 cd /usr/local/lib
 sudo curl -O http://www.antlr.org/download/antlr-4.13.1-complete.jar
 export CLASSPATH=”.:/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH” 
-alias antlr4=’java -Xmx500M -cp “/usr/local/lib/antlr-4.5-complete.jar:$CLASSPATH” org.antlr.v4.Tool’
+alias antlr4=’java -Xmx500M -cp “/usr/local/lib/antlr-4.13.1-complete.jar:$CLASSPATH” org.antlr.v4.Tool’
 alias grun=’java org.antlr.v4.gui.TestRig’
 ```
 
