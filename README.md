@@ -94,6 +94,19 @@ source ~/.zshrc
 
 # ⚡Como usarlo
 
+## Utilizar shell script
+
+Descargar el zip en descargas
+Dar permisos al sh (ejemplo java.sh)
+```
+chmod +x java.sh
+```
+
+Ejecutar el sh
+```
+./java.sh
+```
+
 ## Calculadora en java
 
 ### Crear el parser
