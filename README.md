@@ -131,13 +131,12 @@ sudo pip3 install antlr4-python3-runtime --break-system-packages
 
 Crear el parser
 ```
-# Antlr python
 antlr4 -Dlanguage=Python3 -visitor LabeledExpr.g4
 ```
 
 Correr la función principal
 ```
-python3 calc.py
+python3 Calc.py
 ```
 
 ### Posibles errores
