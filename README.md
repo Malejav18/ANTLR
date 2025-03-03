@@ -20,6 +20,7 @@ Este proyecto implementa una calculadora aritmética utilizando **ANTLR (Another
 
 - **Java JDK** (versión 8 o superior)
 - **ANTLR** (instalable en Linux y macOS)
+- **Python** (versión 3 o superior)
 
 ### Instalación de Java
 
