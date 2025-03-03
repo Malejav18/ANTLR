@@ -104,12 +104,14 @@ antlr4 -no-listener -visitor LabeledExpr.g4
 ```
 javac Calc.java LabeledExpr*.java
 ```
-### Ejecutar el programa con t.expr
+### Ejecutar el programa
+```
+java Calc
+```
+Opcionalmente se puede editar y ver las expresiones del caso de prueba t.expr usando
 ```
 java Calc t.expr
-```
-Opcionalmente se puede ver las expresiones de t.expr usando
-```
+
 cat t.expr
 ```
 
@@ -120,10 +122,17 @@ Instalar Python con antlr en macOs
 brew install antlr4-python3-runtime
 ```
 
+Instalar Python con antlr en Linux
+```
+sudo apt install python3-pip
+sudo pip3 install antlr4-python3-runtime --break-system-packages
+```
+
+
 Crear el parser
 ```
 # Antlr python
-antlr4 -Dlanguage=Python3 LabeledExpr.g4
+antlr4 -Dlanguage=Python3 -visitor LabeledExpr.g4
 ```
 
 Correr la función principal
@@ -189,44 +198,6 @@ x = -5.32
 1.0
 0.70710677
 Error: Division por 0
-```
-
-## Manejo de errores - errores1.expr
-
-### Ejemplo de Entrada  
-```    
-y = 3+*9
-52.3//2.1
-7**1
-6++3
-```
-
-### Ejemplo de Salida
-```
-line 1:6 no viable alternative at input '*'
-line 2:5 no viable alternative at input '/'
-line 4:2 no viable alternative at input '+'
-Error sintactico
-```
-
-## Manejo de errores - errores1.expr
-
-### Ejemplo de Entrada  
-```    
-y = 3+*9
-y/y+10
-(3*+1)/*6
-4/0
-(
-```
-
-### Ejemplo de Salida
-```
-line 1:6 no viable alternative at input '*'
-line 3:3 no viable alternative at input '+'
-line 3:7 no viable alternative at input '*'
-line 5:1 no viable alternative at input '\n'
-Error sintactico
 ```
 
 El parser con el que se trabaja permite ignorar errores, como simbolos fuera del lenguaje, y mostrar un aviso. Cuando hay dos simbolos de operacion (+,-,*,/) seguidos solo tendra en cuenta el primero, con excepción  de la resta ya que esto se interpretara como parte de un numero negativo. En caso de haber un un punto sin que le siga un numero se ignorara.
