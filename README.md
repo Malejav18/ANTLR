@@ -94,6 +94,8 @@ source ~/.zshrc
 
 # ⚡Como usarlo
 
+## Calculadora en java
+
 ### Crear el parser
 ```
 antlr4 -no-listener -visitor LabeledExpr.g4
@@ -109,6 +111,31 @@ java Calc t.expr
 Opcionalmente se puede ver las expresiones de t.expr usando
 ```
 cat t.expr
+```
+
+## Calculadora en python
+
+Instalar Python con antlr en macOs
+```
+brew install antlr4-python3-runtime
+```
+
+Crear el parser
+```
+# Antlr python
+antlr4 -Dlanguage=Python3 LabeledExpr.g4
+```
+
+Correr la función principal
+```
+python3 calc.py
+```
+
+### Posibles errores
+
+ImportError: cannot import name 'Lexer' from 'antlr4' (unknown location)
+```
+python3 -m pip install antlr4-python3-runtime
 ```
 
 # ⚙ Pruebas funcionales
