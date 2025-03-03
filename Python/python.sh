@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Ruta de ANTLR
-ANTLR_JAR="/Downloads/ANTLR-main/python/antlr-4.13.1-complete.jar"
+ANTLR_JAR="/Downloads/ANTLR-main/antlr-4.13.1-complete.jar"
 GRAMMAR_FILE="LabeledExpr.g4"
 
 # Generar archivos con ANTLR
