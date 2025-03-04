@@ -81,4 +81,16 @@ class EvalVisitor(LabeledExprVisitor):
 	def visitPos(self,ctx):
 	    value = self.visit(ctx.expr())
 	    return value if value is not None else None
+	def visitSin(self, ctx):
+		value = self.visit(ctx.expr())
+		return math.sin(value)
+	def visitCos(self, ctx):
+		value = self.visit(ctx.expr())
+		return math.cos(value)
+	def visitTan(self, ctx):
+		value = self.visit(ctx.expr())
+		return math.tan(value)
+	def visitLog3(self, ctx):
+		value = self.visit(ctx.expr())
+		return math.log(value,3
 	
